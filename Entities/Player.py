@@ -20,7 +20,7 @@ class Player(pg.sprite.Sprite):
         self.arm = Arm(vec2(self.rect.topright), 0)
         self.move_speed = vec2(5, 5)
         self.input = vec2(0, 0)
-        self.gravity = 1.2
+        self.gravity = TILE_SIZE[0]/45
         self.acceleration = vec2(0, self.gravity)
         self.JUMP_FORCE = -TILE_SIZE[1]/2.5
         self.velocity = vec2(0, 0)
