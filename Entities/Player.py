@@ -14,7 +14,7 @@ class Player(pg.sprite.Sprite):
         self.input = vec2(0,0)
         self.gravity = 1.2
         self.acceleration = vec2(0,self.gravity)
-        self.JUMP_FORCE = -20
+        self.JUMP_FORCE = -23
         self.velocity = vec2(0,0)
         self.keys = pg.key.get_pressed()
 
@@ -26,6 +26,12 @@ class Player(pg.sprite.Sprite):
         self.tilemap = tilemap
         self.ground = False
         self.collision_types = {"left": False, "right":False, "bottom": False, "top": False}
+
+
+        self.can_shoot = True   
+        self.current_time = pg.time.get_ticks()
+        self.shoot_interval = 500
+
     
     def get_mouse_pos(self):
         x,y = pg.mouse.get_pos()
@@ -92,10 +98,12 @@ class Player(pg.sprite.Sprite):
 
 
     def shoot(self):
-        if self.keys[pg.K_k] or pg.mouse.get_pressed()[0]:
-            bullet = Bullet(vec2(self.rect.topleft), self.mouse_pos+ self.scroll)
+        if self.can_shoot:
+            if self.keys[pg.K_k] or pg.mouse.get_pressed()[0]:
+                bullet = Bullet(vec2(self.rect.topleft), self.mouse_pos+ self.scroll)
 
-            self.bullets.add(bullet)
+                self.bullets.add(bullet)
+                self.can_shoot = False
 
     def update(self,dt):
         self.check_jump()
@@ -107,8 +115,13 @@ class Player(pg.sprite.Sprite):
 
         input = self.get_input()
 
+        current_time = pg.time.get_ticks()
+        if current_time - self.current_time >= self.shoot_interval:
+            self.current_time= pg.time.get_ticks()
+            self.can_shoot = True
+
         self.shoot()
-        self.bullets.update()
+        self.bullets.update(dt)
 
         #self.velocity = vec2(0,0)
         self.velocity.x = input.x * self.move_speed.x

@@ -16,26 +16,25 @@ class Bullet(pg.sprite.Sprite):
         self.angle = self.direction.angle_to(vec)
         self.image= pg.transform.rotate(self.image, self.angle)
         if self.direction.length != 0:
-            pass
             self.direction = self.direction.normalize()
 
         self.time = 0
     
-    def update(self):
-        self.time +=1
-        self.image = pg.surface.Surface((10,10)).convert_alpha()
+    def update(self,dt):
+        #self.time +=1
+        #self.image = pg.surface.Surface((10,10)).convert_alpha()
         
-        self.image.fill((0,0,255,max(0,min(255/(self.time/10),255))))
-        self.position += self.direction * self.speed
+        #self.image.fill((0,0,255,max(0,min(255/(self.time/10),255))))
+        self.position += self.direction * self.speed *dt
         self.rect.topleft = self.position
 
 
         
 
     def draw(self, surface, scroll):
-        
+        tolerance = 500
         
         pos = self.position - scroll
-        if pos.x < 0 or pos.x > SCREEN_WIDTH or pos.y < 0 or pos.y  >  SCREEN_HEIGHT:
+        if pos.x < -tolerance or pos.x > SCREEN_WIDTH+tolerance  or pos.y < -tolerance or pos.y  >  SCREEN_HEIGHT+tolerance:
             self.kill()
         surface.blit(self.image, pos)

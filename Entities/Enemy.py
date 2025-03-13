@@ -1,6 +1,6 @@
 from settings import *
 from random import randint
-
+from Entities.Bullet import Bullet
 class Enemy(pg.sprite.Sprite):
     def __init__(self, position: vec2, tilemap):
         super().__init__()
@@ -8,6 +8,8 @@ class Enemy(pg.sprite.Sprite):
         self.image.fill('yellow')
         self.position = position
         self.rect = self.image.get_frect(topleft=position)
+
+        self.scroll = vec2(0,0)
 
         self.move_speed = vec2(4, 4)
         self.gravity = 1.2
@@ -24,8 +26,16 @@ class Enemy(pg.sprite.Sprite):
         self.collision_types = {"left": False, "right": False, "bottom": False, "top": False}
         self.blockers = []
 
+        self.bullets = pg.sprite.Group()
+        self.player_pos =vec2(0,0)
+
         self.change_direction_time = pg.time.get_ticks()  # Track when to change direction
         self.change_interval = 2000  # Change direction every 2 seconds
+
+        self.last_shot = pg.time.get_ticks()
+        self.shoot_interval = 800
+
+        self.can_shoot = True
 
     def randomize_direction(self):
         """Chooses a new random movement direction or stops moving."""
@@ -44,7 +54,17 @@ class Enemy(pg.sprite.Sprite):
             elif self.velocity.x < 0:
                 self.collision_types["left"] = True
                 self.input.x *= -1
+    def shoot(self):
+        if self.can_shoot:
+                
+                bullet = Bullet(vec2(self.position), self.player_pos)
+                bullet.speed = 10
 
+                self.bullets.add(bullet)
+                self.can_shoot = False
+
+    def get_player_pos(self, player_pos):
+        self.player_pos = player_pos
     def load_blockers(self, blockers):
         self.blockers = blockers
 
@@ -74,10 +94,18 @@ class Enemy(pg.sprite.Sprite):
 
     def update(self, dt):
         """Updates the enemy movement and collision detection."""
+        
         self.ground = False
+        current_time = pg.time.get_ticks()
+
+        self.bullets.update(dt)
+        if current_time - self.last_shot > self.shoot_interval:
+            self.last_shot = current_time
+            self.can_shoot = True
+        
+        self.shoot()
 
         # Change direction every X seconds
-        current_time = pg.time.get_ticks()
         if current_time - self.change_direction_time > self.change_interval:
             self.randomize_direction()
             self.change_direction_time = current_time
@@ -109,6 +137,7 @@ class Enemy(pg.sprite.Sprite):
             self.kill()
 
     def draw(self, surface: pg.Surface, scroll=vec2(0, 0)):
+        self.scroll = scroll
         """Draws the enemy and its collision boxes for debugging."""
         for rect in self.blockers:
             pg.draw.rect(surface, "red", (rect.x - scroll.x, rect.y - scroll.y, rect.width, rect.height), 2)
