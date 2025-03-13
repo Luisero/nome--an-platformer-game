@@ -10,7 +10,7 @@ class Player(pg.sprite.Sprite):
         self.rect = self.image.get_frect(topleft=position)
 
 
-        self.move_speed = vec2(7,7)
+        self.move_speed = vec2(5,5)
         self.input = vec2(0,0)
         self.gravity = 1.2
         self.acceleration = vec2(0,self.gravity)
