@@ -3,6 +3,7 @@ import pygame as pg
 import pytmx.util_pygame
 from Entities.Tile import Tile
 from Entities.Player import Player
+from Entities.Enemy import Enemy
 from settings import *
 
 class Tilemap(pg.sprite.Group):
@@ -32,7 +33,20 @@ class Tilemap(pg.sprite.Group):
                         tile = Tile(position=position, surface=image, group=self)
        
                 
+    def add_enemies(self, camera_group, enemy_group):
+        for object in self.tmx_data.get_layer_by_name('Enemies'):
             
+            if object.type == 'basic':
+                
+                # Ajuste da posição Y (compensação da origem do Tiled)
+                enemy_x = (object.x + self.initial_pos.x) / self.tmx_data.tilewidth
+                enemy_y = (object.y + self.initial_pos.y) / self.tmx_data.tileheight
+                
+                enemy = Enemy(vec2(enemy_x* TILE_SIZE[0], enemy_y*TILE_SIZE[1]), self)
+                enemy_group.add(enemy)
+                camera_group.add(enemy)
+                
+
     
     def add_player(self, camera_group):
         object = self.tmx_data.get_object_by_name('player')

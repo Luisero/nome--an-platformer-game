@@ -1,10 +1,10 @@
 from settings import *
-from random import random
-class Player(pg.sprite.Sprite):
+from random import randint
+class Enemy(pg.sprite.Sprite):
     def __init__(self,position:vec2, tilemap):
         super().__init__()
         self.image = pg.surface.Surface((32,64))
-        self.image.fill('red')
+        self.image.fill('yellow')
         self.position = position
         self.rect = self.image.get_frect(topleft=position)
 
@@ -16,32 +16,17 @@ class Player(pg.sprite.Sprite):
         self.JUMP_FORCE = -20
         self.velocity = vec2(0,0)
 
+        self.input = vec2(randint(-1,1),randint(-1,1))
+        if self.input.length() != 0:
+            self.input = self.input.normalize()
 
         self.collision_list = []
         self.tilemap = tilemap
         self.ground = False
         self.collision_types = {"left": False, "right":False, "bottom": False, "top": False}
         
-    def get_input(self):
-        input = vec2()
-        '''keys = pg.key.get_pressed()
-        if keys[pg.K_a]:
-            input.x -=1
-        if keys[pg.K_d]:
-            input.x +=1
-        if keys[pg.K_w]:
-            input.y -=1
-        if keys[pg.K_s]:
-            input.y +=1
-        
-        if input.length() != 0:
-            input = input.normalize()
-        '''
-        input.x = random()
-        input.y = random()
-        if input.length() != 0:
-            input = input.normalize()
-        return input
+    def change_input(self):
+        pass
 
     def is_grounded(self):
         if self.ground:
@@ -49,10 +34,10 @@ class Player(pg.sprite.Sprite):
         return False
     def check_jump(self):
         keys = pg.key.get_pressed()
-        if keys[pg.K_SPACE] and self.is_grounded():
+        '''if keys[pg.K_SPACE] and self.is_grounded():
             self.velocity.y = self.JUMP_FORCE
         else: 
-            self.acceleration.y =self.gravity
+            self.acceleration.y =self.gravity'''
 
     def manage_collision_x(self):
 
@@ -87,9 +72,9 @@ class Player(pg.sprite.Sprite):
         #self.acceleration.y *=dt
         self.ground = False
 
-        input = self.get_input()
+        input = self.change_input()
         #self.velocity = vec2(0,0)
-        self.velocity.x = input.x * self.move_speed.x
+        self.velocity.x = self.input.x * self.move_speed.x
         #self.velocity.y = input.y * self.move_speed.y
         self.velocity.y += self.acceleration.y * dt
         
@@ -111,7 +96,8 @@ class Player(pg.sprite.Sprite):
         #self.rect.topleft = self.position
         self.position = vec2(self.rect.topleft)
         
-        
+        if self.position.y > 4000:
+            self.kill()
 
 
     def draw(self, surface:pg.Surface, scroll=vec2(0,0)):

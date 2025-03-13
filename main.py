@@ -22,6 +22,9 @@ class Game:
         self.target_fps = TARGET_FPS
         self.fps = FPS
         self.player = self.tilemap.add_player(self.camera)
+        self.enemies = pg.sprite.Group()
+        self.tilemap.add_enemies(self.camera, self.enemies)
+        
         self.camera.add(self.player)
         self.entities_group.add(self.player)
 
@@ -47,8 +50,14 @@ class Game:
         self.dt = now - self.prev_time
         self.dt *= self.target_fps
         self.prev_time = now
+
+
         self.tilemap.update()
+        self.enemies.update(self.dt)
         self.entities_group.update(self.dt)
+
+        self.camera.add(self.player.bullets)
+
         self.camera.update_scroll(self.player.rect)
         
     def draw(self):

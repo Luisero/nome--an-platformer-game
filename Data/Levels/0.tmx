@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.0" orientation="orthogonal" renderorder="right-down" width="256" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="5">
+<map version="1.8" tiledversion="1.8.0" orientation="orthogonal" renderorder="right-down" width="256" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="9">
  <editorsettings>
   <export target="0." format="json"/>
  </editorsettings>
@@ -72,6 +72,11 @@
 17,18,18,18,18,18,18,18,18,18,18,18,18,18,18,19,0,0,0,0,0,0,17,18,18,18,18,18,18,18,18,18,18,18,19,0,0,9,10,10,10,19,17,18,18,18,18,18,18,18,19,17,18,18,18,18,18,18,18,19,17,18,19,17,18,18,18,18,18,18,18,18,18,18,19,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup id="4" name="Enemies">
+  <object id="5" name="Enemy" type="basic" x="311.377" y="865.697"/>
+  <object id="7" name="Enemy" type="basic" x="207.585" y="878.814"/>
+  <object id="8" name="Enemy" type="basic" x="390.077" y="915.883"/>
+ </objectgroup>
  <objectgroup id="2" name="Player">
   <object id="1" name="player" x="153.657" y="882.606"/>
  </objectgroup>

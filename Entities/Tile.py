@@ -18,8 +18,7 @@ class Tile(pg.sprite.Sprite):
         
     def draw(self, surface:pg.Surface, scroll=vec2(0,0)):
         surface.blit(self.image,self.rect.topleft-scroll)
-        
-        
+    
         
     def update_collider(self, collider):
         self.collider = collider
