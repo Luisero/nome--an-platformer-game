@@ -1,5 +1,6 @@
 from settings import *
 import time
+import pytmx
 from Entities.Camera import Camera
 from Entities.Player import Player
 from Entities.Tilemap import Tilemap
@@ -15,7 +16,8 @@ class Level:
         self.tilemap.load_tiles()
 
         
-        
+        self.dt = 0
+
         self.player = self.tilemap.add_player(self.camera)
         self.enemies = pg.sprite.Group()
         self.tilemap.add_enemies(self.camera, self.enemies)
@@ -30,10 +32,8 @@ class Level:
     
     
         
-    def update(self):
-       
-
-
+    def update(self, dt):
+        self.dt = dt
         self.tilemap.update()
         self.enemies.update(self.dt)
         self.entities_group.update(self.dt)
@@ -62,14 +62,4 @@ class Level:
             
             self.enemy_blockers.append(rect)
         
-    def draw(self):
-        self.screen.fill(BG_COLOR)
-        self.camera.custom_draw(self.screen)
-
-        # Exibir FPS na tela
-        fps_text = self.font.render(f"FPS: {int(self.clock.get_fps())}", True, (255, 255, 255))
-        self.screen.blit(fps_text, (10, 10))
-
-        # Exibir posição do scroll da câmera
-        scroll_text = self.font.render(f"Scroll: {self.camera.scroll}", True, (255, 255, 255))
-        self.screen.blit(scroll_text, (10, 50))
+   

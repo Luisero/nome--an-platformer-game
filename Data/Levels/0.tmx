@@ -73,7 +73,7 @@
 </data>
  </layer>
  <objectgroup id="4" name="Enemies">
-  <object id="5" name="Enemy" type="basic" x="311.377" y="865.697"/>
+  <object id="5" name="Enemy" type="basic" x="314.377" y="866.197"/>
   <object id="7" name="Enemy" type="basic" x="207.585" y="878.814"/>
   <object id="8" name="Enemy" type="basic" x="390.077" y="915.883"/>
   <object id="20" name="Enemy" type="basic" x="725.435" y="854.235"/>
@@ -81,7 +81,7 @@
  <objectgroup id="5" name="Enemy blockers">
   <object id="10" name="Blocker" x="252.067" y="879.954" width="12.5463" height="15.3978"/>
   <object id="11" name="Blocker" x="37.3674" y="879.165" width="9.6949" height="14.8275"/>
-  <object id="13" name="Blocker" x="280.582" y="865.412" width="12.5463" height="15.3978"/>
+  <object id="13" name="Blocker" x="279.582" y="865.412" width="12.5463" height="15.3978"/>
   <object id="14" name="Blocker" x="333.048" y="864.842" width="12.5463" height="15.3978"/>
   <object id="15" name="Blocker" x="345.595" y="910.465" width="12.5463" height="15.3978"/>
   <object id="16" name="Blocker" x="554.32" y="914.457" width="12.5463" height="15.3978"/>
