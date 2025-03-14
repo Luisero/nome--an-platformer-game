@@ -65,6 +65,9 @@ class Game:
         # Exibir posição do scroll da câmera
         scroll_text = self.font.render(f"Scroll: {self.level.camera.scroll}", True, (255, 255, 255))
         self.screen.blit(scroll_text, (10, 50))
+
+        life_text = self.font.render(f'Life: {self.level.player.life}', True, 'white')
+        self.screen.blit(life_text,(10,100))
         
     def run(self):
         self.runnig = True 

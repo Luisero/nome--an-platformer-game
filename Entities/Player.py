@@ -1,6 +1,7 @@
 from settings import *
 from Entities.Animation import Animation
 from Entities.Bullet import Bullet
+from .PlayerStates.States import *
 class Player(pg.sprite.Sprite):
     def __init__(self,position:vec2, tilemap):
         super().__init__()
@@ -8,6 +9,8 @@ class Player(pg.sprite.Sprite):
         self.image.fill('red')
         self.position = position
         self.rect = self.image.get_frect(topleft=position)
+
+        
 
 
         self.move_speed = vec2(5,5)
@@ -20,6 +23,8 @@ class Player(pg.sprite.Sprite):
 
         self.bullets = pg.sprite.Group()
         self.scroll = vec2(0,0)
+
+        self.life = 100
         
         self.mouse_pos = self.get_mouse_pos()
         self.collision_list = []
@@ -27,6 +32,8 @@ class Player(pg.sprite.Sprite):
         self.ground = False
         self.collision_types = {"left": False, "right":False, "bottom": False, "top": False}
 
+        self.active_state = IdleState(self)
+    
 
         self.can_shoot = True   
         self.current_time = pg.time.get_ticks()
@@ -104,8 +111,34 @@ class Player(pg.sprite.Sprite):
 
                 self.bullets.add(bullet)
                 self.can_shoot = False
+    def handle_collison(self):
+        self.collision_types = {"left": False, "right":False, "bottom": False, "top": False}
 
+        self.position += self.velocity * self.dt 
+        
+        self.rect.x = self.position.x
+        self.collision_list = self.tilemap.get_collision_with(self)
+
+        self.manage_collision_x()
+        self.rect.y = self.position.y
+        self.collision_list = self.tilemap.get_collision_with(self)
+        self.manage_collision_y()
+        pass
     def update(self,dt):
+        input = self.get_input()
+        self.dt = dt
+        new_state = self.active_state.input(input)
+        
+        if new_state:
+            del self.active_state
+            self.active_state = new_state
+
+        new_state = self.active_state.update(self.dt)
+        
+        if new_state:
+            del self.active_state
+            self.active_state = new_state
+
         self.check_jump()
         #self.acceleration.y *=dt
         self.ground = False
@@ -113,7 +146,6 @@ class Player(pg.sprite.Sprite):
         self.mouse_pos = self.get_mouse_pos()
 
 
-        input = self.get_input()
 
         current_time = pg.time.get_ticks()
         if current_time - self.current_time >= self.shoot_interval:
@@ -129,19 +161,9 @@ class Player(pg.sprite.Sprite):
         self.velocity.y += self.acceleration.y * dt
         
 
-        self.collision_types = {"left": False, "right":False, "bottom": False, "top": False}
-
-        self.position += self.velocity * dt 
+       
         
-        self.rect.x = self.position.x
-        self.collision_list = self.tilemap.get_collision_with(self)
-
-        self.manage_collision_x()
-        self.rect.y = self.position.y
-        self.collision_list = self.tilemap.get_collision_with(self)
-        self.manage_collision_y()
-        
-        
+        self.handle_collison(   )
 
         #self.rect.topleft = self.position
         self.position = vec2(self.rect.topleft)
@@ -153,4 +175,8 @@ class Player(pg.sprite.Sprite):
             self.scroll = scroll
             surface.blit(self.image,self.rect.topleft-scroll)
             
-            
+
+            font = pg.font.Font(None, 36)
+            state_text = font.render(f"State: {self.active_state}", True, (255, 255, 255))
+            surface.blit(state_text, (10, 130))
+                

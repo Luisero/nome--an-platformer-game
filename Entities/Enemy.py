@@ -33,7 +33,7 @@ class Enemy(pg.sprite.Sprite):
         self.change_interval = 2000  # Change direction every 2 seconds
 
         self.last_shot = pg.time.get_ticks()
-        self.shoot_interval = 800
+        self.shoot_interval = 1000
 
         self.can_shoot = True
 
@@ -58,7 +58,7 @@ class Enemy(pg.sprite.Sprite):
         if self.can_shoot:
                 
                 bullet = Bullet(vec2(self.position), self.player_pos)
-                bullet.speed = 10
+                bullet.speed = 5
 
                 self.bullets.add(bullet)
                 self.can_shoot = False

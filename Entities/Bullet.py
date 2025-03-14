@@ -18,6 +18,8 @@ class Bullet(pg.sprite.Sprite):
         if self.direction.length != 0:
             self.direction = self.direction.normalize()
 
+        self.damage= 5
+
         self.time = 0
     
     def update(self,dt):
