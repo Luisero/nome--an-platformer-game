@@ -39,6 +39,10 @@ class Player(pg.sprite.Sprite):
         self.current_time = pg.time.get_ticks()
         self.shoot_interval = 500
 
+        self.dash_points = 0
+
+        self.ammo = 64
+
     
     def get_mouse_pos(self):
         x,y = pg.mouse.get_pos()
@@ -106,11 +110,12 @@ class Player(pg.sprite.Sprite):
 
     def shoot(self):
         if self.can_shoot:
-            if self.keys[pg.K_k] or pg.mouse.get_pressed()[0]:
+            if (self.keys[pg.K_k] or pg.mouse.get_pressed()[0]) and self.ammo > 0 :
                 bullet = Bullet(vec2(self.rect.topleft), self.mouse_pos+ self.scroll)
 
                 self.bullets.add(bullet)
                 self.can_shoot = False
+                self.ammo -=1
     def handle_collison(self):
         self.collision_types = {"left": False, "right":False, "bottom": False, "top": False}
 
@@ -179,4 +184,6 @@ class Player(pg.sprite.Sprite):
             font = pg.font.Font(None, 36)
             state_text = font.render(f"State: {self.active_state}", True, (255, 255, 255))
             surface.blit(state_text, (10, 130))
+            ammo_text = font.render(f'Ammo: {self.ammo}', True, (255,255,255))
+            surface.blit(ammo_text, (10, 170))
                 

@@ -2,7 +2,7 @@ from settings import *
 
 
 class Bullet(pg.sprite.Sprite):
-    def __init__(self, position:vec2, shot_to:vec2):
+    def __init__(self, position:vec2, shot_to:vec2, enemy_bullet=False):
         super().__init__()
         self.position = position
         self.shot_to = shot_to
@@ -18,6 +18,8 @@ class Bullet(pg.sprite.Sprite):
         if self.direction.length != 0:
             self.direction = self.direction.normalize()
 
+        self.enemy_bullet = enemy_bullet
+
         self.damage= 5
 
         self.time = 0
@@ -31,12 +33,13 @@ class Bullet(pg.sprite.Sprite):
         self.rect.topleft = self.position
 
 
-        
+    
 
     def draw(self, surface, scroll):
         tolerance = 500
         
         pos = self.position - scroll
         if pos.x < -tolerance or pos.x > SCREEN_WIDTH+tolerance  or pos.y < -tolerance or pos.y  >  SCREEN_HEIGHT+tolerance:
+
             self.kill()
         surface.blit(self.image, pos)

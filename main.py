@@ -10,11 +10,12 @@ from Entities.Camera import Camera
 class Game:
     def __init__(self):
         pg.init()
+        self.level_number = 0
         self.screen = pg.display.set_mode(SCREEN_SIZE, pg.FULLSCREEN,vsync=True)
         self.clock = pg.time.Clock()
         self.font = pg.font.Font(None, 36)  # Fonte para exibir o FPS
 
-        self.level = Level(0)
+        self.level = Level(self.level_number)
 
        
         self.prev_time = time.time()
@@ -28,7 +29,9 @@ class Game:
     def exit(self):
         pg.quit()
         exit_process()
-    
+    def change_level(self):
+        self.level_number+=1
+        self.level = Level(self.level_number)
     def check_events(self):
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -47,6 +50,9 @@ class Game:
         self.dt = now - self.prev_time
         self.dt *= self.target_fps
         self.prev_time = now
+        
+        if self.level.should_change_level:
+            self.change_level()
 
         self.level.update(self.dt)
 
@@ -58,6 +64,10 @@ class Game:
         self.screen.fill(BG_COLOR)
         self.level.camera.custom_draw(self.screen)
 
+        rect = pg.Rect(self.level.rect_next_level_trigger)
+        rect.left -= self.level.camera.scroll.x
+        rect.top -= self.level.camera.scroll.y
+        pg.draw.rect(self.screen,(255,0,0),rect,2)
         # Exibir FPS na tela
         fps_text = self.font.render(f"FPS: {int(self.clock.get_fps())}", True, (255, 255, 255))
         self.screen.blit(fps_text, (10, 10))

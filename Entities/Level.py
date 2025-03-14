@@ -10,13 +10,17 @@ class Level:
     def __init__(self, number):
         self.number = number
         self.camera = Camera()
-        self.tilemap = Tilemap(f'./Data/Levels/0.tmx')
+        self.tilemap = Tilemap(f'./Data/Levels/{self.number}.tmx')
         self.camera.add(self.tilemap.sprites())
         self.entities_group = pg.sprite.Group()
         self.tilemap.load_tiles()
 
-        
+        print('timse')
+
+        self.rect_next_level_trigger =pg.Rect()
         self.dt = 0
+
+        self.should_change_level=False
 
         self.player = self.tilemap.add_player(self.camera)
         self.player_group = pg.sprite.GroupSingle(self.player)
@@ -30,6 +34,8 @@ class Level:
             enemy.load_blockers(self.enemy_blockers)
         self.camera.add(self.player)
         self.entities_group.add(self.player)
+
+        self.add_next_level_trigger()
 
     
     
@@ -48,7 +54,9 @@ class Level:
             enemy.get_player_pos(self.player.position)
             self.camera.add(enemy.bullets)
 
-        
+        if self.player.rect.colliderect(self.rect_next_level_trigger):
+            self.should_change_level=True
+            
 
         if self.player.position.y > 6000:
             self.player.position = self.initial_player_pos
@@ -72,8 +80,8 @@ class Level:
 
     
     def add_enemy_blockers(self):
-        data = pytmx.load_pygame('./Data/Levels/0.tmx', pixelalpha=True)
-
+        data = pytmx.load_pygame(f'./Data/Levels/{self.number}.tmx', pixelalpha=True)
+        
         for obj in data.get_layer_by_name('Enemy blockers'):
             blocker_x = obj.x / data.tilewidth
             blocker_y = obj.y / data.tileheight
@@ -81,5 +89,16 @@ class Level:
             rect = pg.Rect(blocker_x* TILE_SIZE[0],blocker_y*TILE_SIZE[1], TILE_SIZE[0],TILE_SIZE[1])
             
             self.enemy_blockers.append(rect)
+
+    def add_next_level_trigger(self):
+        data = pytmx.load_pygame(f'./Data/Levels/{self.number}.tmx', pixelalpha=True)
+
+        for obj in data.get_layer_by_name('Next'):
+            blocker_x = obj.x / data.tilewidth
+            blocker_y = obj.y / data.tileheight
+                
+            rect = pg.Rect(blocker_x* TILE_SIZE[0],blocker_y*TILE_SIZE[1], TILE_SIZE[0],TILE_SIZE[1]*4)
+        
+            self.rect_next_level_trigger =rect
         
    

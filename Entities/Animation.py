@@ -28,9 +28,9 @@ class Animation(pg.sprite.Sprite):
         self.current_frame += self.speed
         if self.current_frame >= len(self.images):
             if self.repeat:
-                self.current_frame = 0  # Reinicia a animação
+                self.current_frame = 0 
             else:
-                self.current_frame = len(self.images) - 1  # Mantém no último frame
+                self.current_frame = len(self.images) - 1  
 
         self.current_image = self.images[int(self.current_frame) % len(self.images)]
         self.current_image = pg.transform.flip(self.current_image,flip,False)
