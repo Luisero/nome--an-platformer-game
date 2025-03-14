@@ -57,7 +57,8 @@ class Enemy(pg.sprite.Sprite):
     def shoot(self):
         if self.can_shoot:
                 
-                bullet = Bullet(vec2(self.position), self.player_pos)
+                
+                bullet = Bullet(vec2(self.position), vec2(self.player_pos.x, self.player_pos.y+ TILE_SIZE[1]/2))
                 bullet.speed = 5
 
                 self.bullets.add(bullet)

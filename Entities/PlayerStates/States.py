@@ -46,6 +46,8 @@ class JumpState(State):
         if self.context.velocity.y > 0:
             return FallingState(self.context)
         
+        if self.context.collision_types['top']:
+            return FallingState(self.context)
     
     
     def __str__(self):
