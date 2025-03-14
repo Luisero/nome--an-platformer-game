@@ -73,7 +73,7 @@
   <object id="3" name="Enemy" type="basic" x="253.136" y="274.703" width="17.0271" height="24.973"/>
  </objectgroup>
  <objectgroup id="4" name="Enemy blockers">
-  <object id="7" name="Blocker" x="350.357" y="301.063" width="20.4726" height="32.1306"/>
+  <object id="7" name="Blocker" x="350.357" y="300.063" width="20.4726" height="32.1306"/>
   <object id="8" name="Blocker" x="143.146" y="303.009" width="20.4726" height="32.1306"/>
  </objectgroup>
  <objectgroup id="5" name="Next"/>

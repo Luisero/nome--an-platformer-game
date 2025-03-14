@@ -17,7 +17,10 @@ class Tile(pg.sprite.Sprite):
 
         
     def draw(self, surface:pg.Surface, scroll=vec2(0,0)):
-        surface.blit(self.image,self.rect.topleft-scroll)
+        pos = self.rect.topleft - scroll
+
+        if pos.x >-TILE_SIZE[0] and pos.x <= SCREEN_WIDTH and pos.y >= -TILE_SIZE[1] and pos.y <= SCREEN_HEIGHT:
+            surface.blit(self.image,pos)
         
     
         
