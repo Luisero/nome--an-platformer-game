@@ -17,6 +17,8 @@ class Enemy(pg.sprite.Sprite):
         self.JUMP_FORCE = -20
         self.velocity = vec2(0, 0)
 
+        self.life = 20
+
         self.input = vec2(0, 0)
         self.randomize_direction()
 
@@ -33,7 +35,7 @@ class Enemy(pg.sprite.Sprite):
         self.change_interval = 2000  # Change direction every 2 seconds
 
         self.last_shot = pg.time.get_ticks()
-        self.shoot_interval = 800
+        self.shoot_interval = 500
 
         self.can_shoot = True
 

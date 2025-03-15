@@ -38,6 +38,7 @@ class Player(pg.sprite.Sprite):
         self.can_shoot = True   
         self.current_time = pg.time.get_ticks()
         self.shoot_interval = 500
+        
 
         self.dash_points = 0
 
@@ -72,7 +73,7 @@ class Player(pg.sprite.Sprite):
     def check_jump(self):
         
         if self.keys[pg.K_SPACE] and self.is_grounded():
-            self.velocity.y = self.JUMP_FORCE
+            self.velocity.y = self.JUMP_FORCE 
         else: 
             self.acceleration.y =self.gravity
 

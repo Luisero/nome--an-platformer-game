@@ -65,9 +65,12 @@ class Level:
         for bullet in self.player.bullets:
             hits = pg.sprite.spritecollide(bullet,self.enemies,False)
             for enemy in hits:
-                for e_bullets in enemy.bullets:
-                    e_bullets.kill()
-                enemy.kill()
+                enemy.life -= bullet.damage
+                enemy.image.fill('orange')
+                if enemy.life < 0:
+                    enemy.kill()
+                    for e_bullets in enemy.bullets:
+                        e_bullets.kill()
 
     def check_enemy_hit_player(self):
         

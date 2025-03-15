@@ -28,6 +28,7 @@ class FallingState(State) :
     def __init__(self, context):
         super().__init__(context)
 
+    
     def update(self,dt):
         if self.context.collision_types['bottom']:
             return IdleState(self.context)
