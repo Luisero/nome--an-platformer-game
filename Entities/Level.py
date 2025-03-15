@@ -4,7 +4,7 @@ import pytmx
 from Entities.Camera import Camera
 from Entities.Player import Player
 from Entities.Tilemap import Tilemap
-
+import math
 
 class Level:
     def __init__(self, number):
@@ -31,7 +31,9 @@ class Level:
         self.enemy_blockers = []
         self.add_enemy_blockers()
         for enemy in self.enemies.sprites():
-            enemy.load_blockers(self.enemy_blockers)
+            for enemy_blocker in self.enemy_blockers:
+                
+                 enemy.load_blockers(self.enemy_blockers)
         self.camera.add(self.player)
         self.entities_group.add(self.player)
 
@@ -48,7 +50,7 @@ class Level:
         self.camera.add(self.player.bullets)
         self.check_player_hit_enemy()
         self.check_enemy_hit_player()
-
+       
         self.camera.update_scroll(self.player.rect)
         for enemy in self.enemies:
             enemy.get_player_pos(self.player.position)
@@ -70,6 +72,7 @@ class Level:
                 if enemy.life < 0:
                     enemy.kill()
                     for e_bullets in enemy.bullets:
+                        
                         e_bullets.kill()
 
     def check_enemy_hit_player(self):

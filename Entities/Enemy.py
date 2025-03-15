@@ -17,7 +17,7 @@ class Enemy(pg.sprite.Sprite):
         self.JUMP_FORCE = -20
         self.velocity = vec2(0, 0)
 
-        self.life = 20
+        self.life = 60
 
         self.input = vec2(0, 0)
         self.randomize_direction()

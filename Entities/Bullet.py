@@ -20,7 +20,7 @@ class Bullet(pg.sprite.Sprite):
 
         self.enemy_bullet = enemy_bullet
 
-        self.damage= 5
+        self.damage= 10
 
         self.time = 0
     

@@ -37,7 +37,7 @@ class Player(pg.sprite.Sprite):
 
         self.can_shoot = True   
         self.current_time = pg.time.get_ticks()
-        self.shoot_interval = 500
+        self.shoot_interval = 900
         
 
         self.dash_points = 0

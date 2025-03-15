@@ -4,6 +4,7 @@ class Camera(pg.sprite.Group):
     def __init__(self):
         super().__init__()
         self.scroll = vec2(-97,3097)
+        
     
 
     def update_scroll(self, rect:pg.Rect):
