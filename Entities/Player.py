@@ -5,7 +5,7 @@ from .PlayerStates.States import *
 class Player(pg.sprite.Sprite):
     def __init__(self,position:vec2, tilemap):
         super().__init__()
-        self.image = pg.surface.Surface((32,64))
+        self.image = pg.surface.Surface((TILE_SIZE[0]//2,TILE_SIZE[1]))
         self.image.fill('red')
         self.position = position
         self.rect = self.image.get_frect(topleft=position)

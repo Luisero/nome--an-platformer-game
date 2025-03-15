@@ -31,7 +31,7 @@ class Tilemap(pg.sprite.Group):
                     
                     if image:
                         
-                        image = pg.transform.scale(image, TILE_SIZE).convert_alpha()
+                        image = pg.transform.scale(image, TILE_SIZE)
                         tile = Tile(position=position, surface=image, group=self, collide=collide)
        
                 

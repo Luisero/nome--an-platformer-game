@@ -4,7 +4,7 @@ from Entities.Bullet import Bullet
 class Enemy(pg.sprite.Sprite):
     def __init__(self, position: vec2, tilemap):
         super().__init__()
-        self.image = pg.surface.Surface((32, 64))
+        self.image = pg.surface.Surface((TILE_SIZE[0]//2, TILE_SIZE[1]))
         self.image.fill('yellow')
         self.position = position
         self.rect = self.image.get_frect(topleft=position)
