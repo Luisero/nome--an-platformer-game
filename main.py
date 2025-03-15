@@ -14,8 +14,13 @@ class Game:
         self.screen = pg.display.set_mode(SCREEN_SIZE, pg.FULLSCREEN,vsync=True)
         self.clock = pg.time.Clock()
         self.font = pg.font.Font(None, 36)  # Fonte para exibir o FPS
+        pg.mouse.set_visible(False) # Hide cursor here
+
 
         self.level = Level(self.level_number)
+
+        self.aim_img= pg.image.load('Assets/Sprites/aim.png').convert_alpha()
+        self.aim_img = pg.transform.scale(self.aim_img, (self.aim_img.get_width()*1.5,self.aim_img.get_height()*1.5))
 
        
         self.prev_time = time.time()
@@ -24,8 +29,12 @@ class Game:
         self.fps = FPS
         
 
-        
-
+    def draw_aim(self):
+        pos = pg.mouse.get_pos()
+        pos = vec2(pos)
+        pos.x -= self.aim_img.get_width()
+        pos.y -= self.aim_img.get_height()
+        self.screen.blit(self.aim_img,pos)
     def exit(self):
         pg.quit()
         exit_process()
@@ -68,6 +77,7 @@ class Game:
         rect.left -= self.level.camera.scroll.x
         rect.top -= self.level.camera.scroll.y
         pg.draw.rect(self.screen,(255,0,0),rect,2)
+        self.draw_aim()
         # Exibir FPS na tela
         fps_text = self.font.render(f"FPS: {int(self.clock.get_fps())}", True, (255, 255, 255))
         self.screen.blit(fps_text, (10, 10))

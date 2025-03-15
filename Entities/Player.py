@@ -168,7 +168,7 @@ class Player(pg.sprite.Sprite):
 
        
         
-        self.handle_collison(   )
+        self.handle_collison( )
 
         #self.rect.topleft = self.position
         self.position = vec2(self.rect.topleft)

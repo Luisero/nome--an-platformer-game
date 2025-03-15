@@ -3,17 +3,17 @@ import random
 import math
 from settings import *
 class Tile(pg.sprite.Sprite):
-    def __init__(self,position:vec2, surface:pg.Surface, group, collider = None) -> None:
+    def __init__(self,position:vec2, surface:pg.Surface, group, collide=True) -> None:
         super().__init__(group)
         self.image = surface
         #self.original_position = [position[0], position[1]]
         #self.position = [position[0], position[1]+200]
         self.position = position
-        self.type = 'Tile'
+        self.collide = collide
         
         
         self.rect = self.image.get_frect(topleft =self.position)
-        self.collider = collider
+        
 
         
     def draw(self, surface:pg.Surface, scroll=vec2(0,0)):

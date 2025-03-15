@@ -24,13 +24,15 @@ class Tilemap(pg.sprite.Group):
                     attributes = self.tmx_data.get_tile_properties_by_gid(gid) or {}
 
                     position = vec2(x * TILE_SIZE[0]+self.initial_pos.x, y * TILE_SIZE[1] + self.initial_pos.y)
-                    #collider = attributes.get('collide', False)  # Evita KeyError
+                    collide = attributes.get('collide', False)  # Evita KeyError
                     
+                    if  collide:
+                        collide = True
                     
                     if image:
                         
                         image = pg.transform.scale(image, TILE_SIZE).convert_alpha()
-                        tile = Tile(position=position, surface=image, group=self)
+                        tile = Tile(position=position, surface=image, group=self, collide=collide)
        
                 
     def add_enemies(self, camera_group, enemy_group):
@@ -68,8 +70,17 @@ class Tilemap(pg.sprite.Group):
             surface.blit(sprite.image, sprite.rect)
 
     def get_collision_with(self, sprite):
-      
-        return pg.sprite.spritecollide(sprite, self, False)
+        colliisions = []
+        for tile in self.sprites():
+            try:
+                if tile.collide==True:
+                    if tile.rect.colliderect(sprite.rect):
+                        colliisions.append(tile)
+            except:
+                pass
+        #return pg.sprite.spritecollide(sprite, self, False)
+
+        return colliisions
 
     def make_map(self):
         """Cria uma superfície com o mapa renderizado."""

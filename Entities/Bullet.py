@@ -6,7 +6,7 @@ class Bullet(pg.sprite.Sprite):
         super().__init__()
         self.position = position
         self.shot_to = shot_to
-        self.image = pg.surface.Surface((10,10)).convert_alpha()
+        self.image = pg.surface.Surface((10,10)).convert()
         self.image.fill('blue')
         self.rect = self.image.get_frect()
         self.rect.topleft = self.position
