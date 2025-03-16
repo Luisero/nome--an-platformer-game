@@ -4,6 +4,7 @@ import pytmx
 from Entities.Camera import Camera
 from Entities.Player import Player
 from Entities.Tilemap import Tilemap
+from Entities.DeadBullet import DeadBullet
 import math
 
 class Level:
@@ -16,7 +17,7 @@ class Level:
         self.tilemap.load_tiles()
 
         self.traps_group = pg.sprite.Group()
-
+        self.dead_bullets = pg.sprite.Group()
         self.explosions_group = pg.sprite.Group()
         self.rect_next_level_trigger =pg.Rect()
         self.dt = 0
@@ -51,6 +52,7 @@ class Level:
         self.explosions_group.update()
         self.camera.add(self.player.bullets)
         self.traps_group.update(self.explosions_group)
+        self.dead_bullets.update(self.dt)
         self.check_player_hit_enemy()
         self.check_enemy_hit_player()
        
@@ -65,6 +67,11 @@ class Level:
 
         if self.player.position.y > 6000:
             self.player.position = self.initial_player_pos
+    
+    def add_dead_bullets(self, bullet):
+        dead_bullet = DeadBullet(bullet.position, bullet.direction)
+        self.dead_bullets.add(dead_bullet)
+        self.camera.add(dead_bullet)
 
     def check_player_hit_enemy(self):
         for bullet in self.player.bullets:
@@ -74,9 +81,13 @@ class Level:
                 enemy.image.fill('orange')
                 if enemy.life < 0:
                     enemy.kill()
+                    
                     for e_bullets in enemy.bullets:
+                        self.add_dead_bullets(e_bullets)
                         
                         e_bullets.kill()
+
+        
 
     def check_enemy_hit_player(self):
         
