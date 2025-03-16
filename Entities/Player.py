@@ -1,18 +1,19 @@
 from settings import *
 from Entities.Animation import Animation
 from Entities.Bullet import Bullet
+from Entities.Arm import Arm
 from .PlayerStates.States import *
 class Player(pg.sprite.Sprite):
-    def __init__(self,position:vec2, tilemap):
+    def __init__(self,position:vec2, tilemap, camera):
         super().__init__()
         self.image = pg.surface.Surface((TILE_SIZE[0]//2,TILE_SIZE[1]))
         self.image.fill('red')
         self.position = position
         self.rect = self.image.get_frect(topleft=position)
 
-        
+        self.camera = camera
 
-
+        self.arm = Arm(vec2(self.rect.topright),0)
         self.move_speed = vec2(5,5)
         self.input = vec2(0,0)
         self.gravity = 1.2
@@ -35,10 +36,16 @@ class Player(pg.sprite.Sprite):
         self.active_state = IdleState(self)
     
 
+        self.anim_flip = False
+
         self.can_shoot = True   
         self.current_time = pg.time.get_ticks()
         self.shoot_interval = 900
-        
+
+        self.attack_duration = 400
+
+        self.attack_cooldown = 2000
+        self.last_attack = 0
 
         self.dash_points = 0
 
@@ -112,7 +119,7 @@ class Player(pg.sprite.Sprite):
     def shoot(self):
         if self.can_shoot:
             if (self.keys[pg.K_k] or pg.mouse.get_pressed()[0]) and self.ammo > 0 :
-                bullet = Bullet(vec2(self.rect.topleft), self.mouse_pos+ self.scroll)
+                bullet = Bullet(vec2(self.arm.rect.midright), self.mouse_pos+ self.scroll)
 
                 self.bullets.add(bullet)
                 self.can_shoot = False
@@ -140,6 +147,8 @@ class Player(pg.sprite.Sprite):
             self.active_state = new_state
 
         new_state = self.active_state.update(self.dt)
+        aim_pos = self.get_mouse_pos() + self.scroll
+        self.arm.update(vec2(self.rect.center),aim_pos)
         
         if new_state:
             del self.active_state
@@ -166,6 +175,12 @@ class Player(pg.sprite.Sprite):
         #self.velocity.y = input.y * self.move_speed.y
         self.velocity.y += self.acceleration.y * dt
         
+        if self.velocity.x < 0:
+            self.anim_flip = True 
+        elif self.velocity.x == 0 and self.anim_flip == True:
+            self.anim_flip = True 
+        elif self.velocity.x >0:
+            self.anim_flip = False
 
        
         
@@ -179,8 +194,8 @@ class Player(pg.sprite.Sprite):
 
     def draw(self, surface:pg.Surface, scroll=vec2(0,0)):
             self.scroll = scroll
-            surface.blit(self.image,self.rect.topleft-scroll)
-            
+           # surface.blit(self.image,self.rect.topleft-scroll)
+            self.arm.draw(surface, scroll)
 
             font = pg.font.Font(None, 36)
             state_text = font.render(f"State: {self.active_state}", True, (255, 255, 255))

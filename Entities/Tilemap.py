@@ -57,7 +57,7 @@ class Tilemap(pg.sprite.Group):
         player_x = (object.x + self.initial_pos.x) / self.tmx_data.tilewidth
         player_y = (object.y + self.initial_pos.y) / self.tmx_data.tileheight
         
-        player = Player(vec2(player_x* TILE_SIZE[0], player_y*TILE_SIZE[1]), self)
+        player = Player(vec2(player_x* TILE_SIZE[0], player_y*TILE_SIZE[1]), self,camera_group)
         camera_group.add(player)
         return player
 

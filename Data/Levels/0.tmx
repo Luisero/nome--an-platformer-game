@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="256" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="29">
+<map version="1.8" tiledversion="1.8.0" orientation="orthogonal" renderorder="right-down" width="256" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="32">
  <editorsettings>
   <export target="0." format="json"/>
  </editorsettings>
@@ -144,15 +144,13 @@
  <objectgroup id="6" name="Checkpoints"/>
  <objectgroup id="4" name="Enemies">
   <object id="5" name="Enemy" type="basic" x="313.524" y="863.639"/>
-  <object id="7" name="Enemy" type="basic" x="207.585" y="878.814"/>
   <object id="8" name="Enemy" type="basic" x="390.077" y="915.883"/>
   <object id="20" name="Enemy" type="basic" x="725.435" y="854.235"/>
   <object id="24" name="Enemy" type="basic" x="416.628" y="332.681" width="16.4271" height="28.1608"/>
   <object id="26" name="Enemy" type="basic" x="577.786" y="525.92" width="16.4271" height="28.1608"/>
+  <object id="31" name="Enemy" type="basic" x="1089.91" y="802.17"/>
  </objectgroup>
  <objectgroup id="5" name="Enemy blockers">
-  <object id="10" name="Blocker" x="252.067" y="879.954" width="12.5463" height="15.3978"/>
-  <object id="11" name="Blocker" x="37.3674" y="879.165" width="9.6949" height="14.8275"/>
   <object id="13" name="Blocker" x="279.582" y="865.412" width="12.5463" height="15.3978"/>
   <object id="14" name="Blocker" x="333.048" y="864.842" width="12.5463" height="15.3978"/>
   <object id="15" name="Blocker" x="345.595" y="910.465" width="12.5463" height="15.3978"/>
@@ -163,6 +161,8 @@
   <object id="23" name="Blocker" x="727.486" y="546.788"/>
   <object id="27" name="Blocker" x="572.667" y="356"/>
   <object id="28" name="Blocker" x="203.333" y="360.667"/>
+  <object id="29" name="Blocker" x="997.408" y="802.222" width="12.5463" height="15.3978"/>
+  <object id="30" name="Blocker" x="1195.04" y="802.222" width="12.5463" height="15.3978"/>
  </objectgroup>
  <objectgroup id="2" name="Player">
   <object id="1" name="player" x="84.2975" y="866.308"/>
