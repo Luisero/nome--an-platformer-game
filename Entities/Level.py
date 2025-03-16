@@ -17,6 +17,7 @@ class Level:
 
         self.traps_group = pg.sprite.Group()
 
+        self.explosions_group = pg.sprite.Group()
         self.rect_next_level_trigger =pg.Rect()
         self.dt = 0
 
@@ -47,8 +48,9 @@ class Level:
         self.tilemap.update()
         self.enemies.update(self.dt)
         self.entities_group.update(self.dt)
+        self.explosions_group.update()
         self.camera.add(self.player.bullets)
-        self.traps_group.update()
+        self.traps_group.update(self.explosions_group)
         self.check_player_hit_enemy()
         self.check_enemy_hit_player()
        

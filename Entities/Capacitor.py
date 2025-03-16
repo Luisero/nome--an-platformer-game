@@ -1,5 +1,6 @@
 from settings import *
 from .Animation import Animation
+from Explosion import Explosion
 class Capacitor(pg.sprite.Sprite):
     def __init__(self,pos:vec2, camera ,player):
         super().__init__()
@@ -11,10 +12,11 @@ class Capacitor(pg.sprite.Sprite):
         self.has_started=False 
         self.explosion_time = 1000
         self.player =player
+        
 
         camera.add(self.animation)
         
-    def update(self):
+    def update(self, explosion_group):
         vec_capacitor_player = vec2(self.pos - self.player.position)
         
         if vec_capacitor_player.length() < TILE_SIZE[0]*3:
@@ -25,7 +27,7 @@ class Capacitor(pg.sprite.Sprite):
         if self.has_started:
             current = pg.time.get_ticks()
             if current - self.initial_explosion_time >  self.explosion_time:
-                print('explodes!')
+                explosion_group.add(Explosion(vec2(self.animation.rect.center),self.camera,1))
                 self.animation.kill()
                 self.kill()
 

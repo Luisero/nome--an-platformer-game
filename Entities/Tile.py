@@ -18,7 +18,6 @@ class Tile(pg.sprite.Sprite):
             
             
         
-
         
     def draw(self, surface:pg.Surface, scroll=vec2(0,0)):
         pos = self.rect.topleft - scroll
