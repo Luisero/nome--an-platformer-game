@@ -13,15 +13,19 @@ class Tile(pg.sprite.Sprite):
         
         
         self.rect = self.image.get_frect(topleft =self.position)
+        #self.rect = self.image.get_bounding_rect(min_alpha=1)
+        
+            
+            
         
 
         
     def draw(self, surface:pg.Surface, scroll=vec2(0,0)):
         pos = self.rect.topleft - scroll
-        
 
         if pos.x >-TILE_SIZE[0] and pos.x <= SCREEN_WIDTH and pos.y >= -TILE_SIZE[1] and pos.y <= SCREEN_HEIGHT:
             surface.blit(self.image,pos)
+        
         
     
         

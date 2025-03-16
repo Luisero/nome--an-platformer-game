@@ -21,7 +21,7 @@ class Arm(pg.sprite.Sprite):
         
         
         #pivot.y +=20
-        self.rect = self.image.get_rect(center=pivot)
+        self.rect = self.image.get_rect(midleft=pivot)
 
     def draw(self, surface, scroll):
         pos = vec2(self.rect.topleft) - scroll

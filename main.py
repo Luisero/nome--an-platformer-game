@@ -27,6 +27,8 @@ class Game:
         self.dt = 0
         self.target_fps = TARGET_FPS
         self.fps = FPS
+
+        
         
 
     def draw_aim(self):
@@ -34,6 +36,7 @@ class Game:
         pos = vec2(pos)
         pos.x -= self.aim_img.get_width()
         pos.y -= self.aim_img.get_height()
+    
         self.screen.blit(self.aim_img,pos)
     def exit(self):
         pg.quit()
@@ -58,6 +61,7 @@ class Game:
         now = time.time()
         self.dt = now - self.prev_time
         self.dt *= self.target_fps
+
         self.prev_time = now
         
         if self.level.should_change_level:

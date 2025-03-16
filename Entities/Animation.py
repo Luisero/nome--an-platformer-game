@@ -13,7 +13,9 @@ class Animation(pg.sprite.Sprite):
         self.images = self.load_images()
         self.current_image = self.images[self.current_frame] if self.images else None
         self.image = self.current_image
+        self.pos = pos 
         self.rect = self.current_image.get_rect()
+        self.rect.topleft=pos
 
     def load_images(self):
         images = []

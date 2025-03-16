@@ -4,6 +4,7 @@ import pytmx.util_pygame
 from Entities.Tile import Tile
 from Entities.Player import Player
 from Entities.Enemy import Enemy
+from Entities.Capacitor import Capacitor
 from settings import *
 
 class Tilemap(pg.sprite.Group):
@@ -48,7 +49,19 @@ class Tilemap(pg.sprite.Group):
                 enemy_group.add(enemy)
                 camera_group.add(enemy)
                 
-
+    def add_traps(self, camera, traps_group, player):
+          for object in self.tmx_data.get_layer_by_name('Traps'):
+            
+            if object.type == 'capacitor':
+                print('')
+                # Ajuste da posição Y (compensação da origem do Tiled)
+                trap_x = (object.x + self.initial_pos.x) / self.tmx_data.tilewidth
+                trap_y = (object.y + self.initial_pos.y) / self.tmx_data.tileheight
+                
+                trap = Capacitor(vec2(trap_x* TILE_SIZE[0], trap_y*TILE_SIZE[1]),camera, player)
+                camera.add(trap.animation)
+                traps_group.add(trap)
+                
     
     def add_player(self, camera_group):
         object = self.tmx_data.get_object_by_name('player')

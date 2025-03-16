@@ -142,7 +142,7 @@ class Enemy(pg.sprite.Sprite):
     def draw(self, surface: pg.Surface, scroll=vec2(0, 0)):
         self.scroll = scroll
         """Draws the enemy and its collision boxes for debugging."""
-        for rect in self.blockers:
-            pg.draw.rect(surface, "red", (rect.x - scroll.x, rect.y - scroll.y, rect.width, rect.height), 2)
+        #for rect in self.blockers:
+        #    pg.draw.rect(surface, "red", (rect.x - scroll.x, rect.y - scroll.y, rect.width, rect.height), 2)
 
         surface.blit(self.image, self.rect.topleft - scroll)

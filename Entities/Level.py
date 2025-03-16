@@ -15,7 +15,7 @@ class Level:
         self.entities_group = pg.sprite.Group()
         self.tilemap.load_tiles()
 
-        print('timse')
+        self.traps_group = pg.sprite.Group()
 
         self.rect_next_level_trigger =pg.Rect()
         self.dt = 0
@@ -27,7 +27,7 @@ class Level:
         self.initial_player_pos = self.player.position
         self.enemies = pg.sprite.Group()
         self.tilemap.add_enemies(self.camera, self.enemies)
-
+        self.tilemap.add_traps(self.camera, self.traps_group, self.player)
         self.enemy_blockers = []
         self.add_enemy_blockers()
         for enemy in self.enemies.sprites():
@@ -48,6 +48,7 @@ class Level:
         self.enemies.update(self.dt)
         self.entities_group.update(self.dt)
         self.camera.add(self.player.bullets)
+        self.traps_group.update()
         self.check_player_hit_enemy()
         self.check_enemy_hit_player()
        
