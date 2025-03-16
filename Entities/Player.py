@@ -44,7 +44,7 @@ class Player(pg.sprite.Sprite):
 
         self.attack_duration = 400
 
-        self.attack_cooldown = 2000
+        self.attack_cooldown = 1000
         self.last_attack = 0
 
         self.dash_points = 0

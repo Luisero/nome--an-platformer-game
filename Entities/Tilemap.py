@@ -53,7 +53,7 @@ class Tilemap(pg.sprite.Group):
           for object in self.tmx_data.get_layer_by_name('Traps'):
             
             if object.type == 'capacitor':
-                print('')
+                
                 # Ajuste da posição Y (compensação da origem do Tiled)
                 trap_x = (object.x + self.initial_pos.x) / self.tmx_data.tilewidth
                 trap_y = (object.y + self.initial_pos.y) / self.tmx_data.tileheight

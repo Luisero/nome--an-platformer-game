@@ -3,7 +3,7 @@
  <tileset firstgid="1" source="Player-Sheet_without Dash Effekt.tsx"/>
  <layer id="1" name="Tile Layer 1" width="4" height="1">
   <data encoding="csv">
-5,6,7,8
+12,13,14,15
 </data>
  </layer>
 </map>

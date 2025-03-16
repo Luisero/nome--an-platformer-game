@@ -5,7 +5,7 @@ from settings import *
 class IdleState(State):
     def __init__(self, context):
         super().__init__(context)
-        self.animation = Animation('Assets/Sprites/idle.tmx', self.context.rect.topleft,True,vec2(self.context.image.get_size()),0.1)
+        self.animation = Animation('Assets/Sprites/idle.tmx', (self.context.rect.left-TILE_SIZE[0]*2,self.context.rect.top),True,vec2(TILE_SIZE[0]*4, TILE_SIZE[1]),0.1)
         self.context.camera.add(self.animation)
     def input(self,input):
         if self.context.keys[pg.K_SPACE]:
@@ -30,7 +30,8 @@ class IdleState(State):
         
     def update(self,dt):
         self.animation.play(self.context.anim_flip)
-        self.animation.rect.topleft = self.context.rect.topleft
+        
+        self.animation.rect.topleft = (self.context.rect.left-TILE_SIZE[0]*2,self.context.rect.top)
     
     def __str__(self):
         return 'IDLE'
@@ -39,10 +40,15 @@ class IdleState(State):
 class FallingState(State) :
     def __init__(self, context):
         super().__init__(context)
+        self.animation = Animation('Assets/Sprites/fall.tmx', (self.context.rect.left-TILE_SIZE[0]*2,self.context.rect.top),False,vec2(TILE_SIZE[0]*4, TILE_SIZE[1]),0.2)
+        self.context.camera.add(self.animation)
 
     
     def update(self,dt):
+        self.animation.play(self.context.anim_flip)
+        self.animation.rect.topleft = (self.context.rect.left-TILE_SIZE[0]*2,self.context.rect.top)
         if self.context.collision_types['bottom']:
+            self.animation.kill()
             return IdleState(self.context)
     
     def __str__(self):
@@ -51,15 +57,21 @@ class FallingState(State) :
 class JumpState(State):
     def __init__(self, context):
         super().__init__(context)
+        self.animation = Animation('Assets/Sprites/jump.tmx', (self.context.rect.left-TILE_SIZE[0]*2,self.context.rect.top),False,vec2(TILE_SIZE[0]*4, TILE_SIZE[1]),0.2)
+        self.context.camera.add(self.animation)
 
     def input(self,input):
         pass
                 
     def update(self, dt):
+        self.animation.play(self.context.anim_flip)
+        self.animation.rect.topleft = (self.context.rect.left-TILE_SIZE[0]*2,self.context.rect.top)
         if self.context.velocity.y > 0:
+            self.animation.kill()
             return FallingState(self.context)
         
         if self.context.collision_types['top']:
+            self.animation.kill()
             return FallingState(self.context)
     
     
@@ -72,7 +84,7 @@ class JumpState(State):
 class RunningState(State):
     def __init__(self, context):
         super().__init__(context)
-        self.animation = Animation('Assets/Sprites/run.tmx', self.context.rect.topleft,True,vec2(self.context.image.get_size()),0.3)
+        self.animation = Animation('Assets/Sprites/run.tmx', (self.context.rect.left-TILE_SIZE[0]*2,self.context.rect.top),True,vec2(TILE_SIZE[0]*4, TILE_SIZE[1]),0.2)
         self.context.camera.add(self.animation)
 
     def input(self,key):
@@ -80,7 +92,7 @@ class RunningState(State):
 
     def update(self,dt):
         self.animation.play(self.context.anim_flip)
-        self.animation.rect.topleft = self.context.rect.topleft
+        self.animation.rect.topleft = (self.context.rect.left-TILE_SIZE[0]*2,self.context.rect.top)
 
         if self.context.velocity.y < 0:
             self.animation.kill()
@@ -99,12 +111,17 @@ class AttackingState(State):
         super().__init__(context)
 
         self.initial_time = pg.time.get_ticks()
+        self.animation = Animation('Assets/Sprites/attack.tmx', (self.context.rect.left-TILE_SIZE[0]*2,self.context.rect.top),False,vec2(TILE_SIZE[0]*4, TILE_SIZE[1]),0.5)
+        self.context.camera.add(self.animation)
 
     def update(self, dt):
         current = pg.time.get_ticks()
+        self.animation.play(self.context.anim_flip)
+        self.animation.rect.topleft = (self.context.rect.left-TILE_SIZE[0]*2,self.context.rect.top)
 
         if current - self.initial_time > self.context.attack_duration:
             self.context.last_attack = pg.time.get_ticks()
+            self.animation.kill()
             return IdleState(self.context)
         
     def __str__(self):
