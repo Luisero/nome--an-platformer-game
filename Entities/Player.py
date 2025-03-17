@@ -174,6 +174,7 @@ class Player(pg.sprite.Sprite):
         self.velocity.x = input.x * self.move_speed.x
         #self.velocity.y = input.y * self.move_speed.y
         self.velocity.y += self.acceleration.y * dt
+        self.velocity.x += self.acceleration.x *dt
         
         if self.velocity.x < 0:
             self.anim_flip = True 
