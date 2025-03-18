@@ -20,7 +20,7 @@ class Explosion(pg.sprite.Sprite):
         self.initial_pos = pos
         self.images =[]
         self.current_frame=0
-        self.damage = 50
+        self.damage = 10
 
         self.speed= speed
         self.player = player

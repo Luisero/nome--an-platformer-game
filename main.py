@@ -52,14 +52,27 @@ class Game:
 
             void main()
             {
-                
-                vec2 screen_uvs = uvs * screen_size;
+                float warp = 0.7;
+                vec2 uv = uvs;
+
+                // Distorção por curvatura para simular o efeito CRT
+                float curvature = sin(uv.x * 6.0) * 0.05;  // Ajuste o valor para distorcer a tela
+                uv.x += curvature;
+
+                // Calculando o efeito de vinheta (escurecimento nas bordas)
+                vec2 screen_uvs = uv * screen_size;
                 vec2 norm_pos = player_pos / screen_size;
                 float dist = length(screen_uvs - norm_pos * screen_size) / (radius * length(screen_size));
                 float vignette = smoothstep(1.0, 0.5, dist);
                 
-                vec4 color = texture(tex, uvs);
-                f_color = vec4(color.rgb * vignette, color.a);
+                // Aplicando o efeito de scanlines (linhas horizontais)
+                float scanlines = abs(sin(gl_FragCoord.y) * 0.5 * 0.75);  // Ajuste para mais ou menos scanlines
+                
+                // Amostrando a textura e aplicando os efeitos de vinheta e scanlines
+                vec4 color = texture(tex, uv);
+                f_color = vec4(color.rgb * vignette * (1.0 - scanlines), color.a);
+            
+
             }
         '''
 
@@ -167,7 +180,7 @@ class Game:
             camera_player_pos = self.level.player.position - self.level.camera.scroll
             self.shader_prog['screen_size'] = (float(SCREEN_SIZE[0]), float(SCREEN_SIZE[1]))
             self.shader_prog['player_pos'] = (float(camera_player_pos[0]), float(camera_player_pos[1]))
-            self.shader_prog['radius'] = 0.4
+            self.shader_prog['radius'] = 0.5
             
 
             

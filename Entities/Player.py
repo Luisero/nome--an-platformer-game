@@ -40,7 +40,7 @@ class Player(pg.sprite.Sprite):
 
         self.can_shoot = True   
         self.current_time = pg.time.get_ticks()
-        self.shoot_interval = 400
+        self.shoot_interval = 700
 
         self.attack_duration = 400
 

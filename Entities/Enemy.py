@@ -59,12 +59,13 @@ class Enemy(pg.sprite.Sprite):
     def shoot(self):
         if self.can_shoot:
                 
-                
-                bullet = Bullet(vec2(self.position), vec2(self.player_pos.x, self.player_pos.y+ TILE_SIZE[1]/2), True)
-                bullet.speed = 7
+                distance  = self.position - vec2(self.player_pos.x, self.player_pos.y+ TILE_SIZE[1]/2)
+                if distance.length() < 800:
+                    bullet = Bullet(vec2(self.position), vec2(self.player_pos.x, self.player_pos.y+ TILE_SIZE[1]/2), True)
+                    bullet.speed = 7
 
-                self.bullets.add(bullet)
-                self.can_shoot = False
+                    self.bullets.add(bullet)
+                    self.can_shoot = False
 
     def get_player_pos(self, player_pos):
         self.player_pos = player_pos
