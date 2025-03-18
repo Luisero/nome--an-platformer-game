@@ -17,4 +17,5 @@ class Camera(pg.sprite.Group):
         
     def custom_draw(self, surface):
         for sprite in self.sprites():
+            
             sprite.draw(surface, self.scroll)

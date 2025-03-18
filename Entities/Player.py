@@ -40,7 +40,7 @@ class Player(pg.sprite.Sprite):
 
         self.can_shoot = True   
         self.current_time = pg.time.get_ticks()
-        self.shoot_interval = 700
+        self.shoot_interval = 400
 
         self.attack_duration = 400
 
@@ -50,6 +50,7 @@ class Player(pg.sprite.Sprite):
         self.dash_points = 0
 
         self.ammo = 64
+        
 
     
     def get_mouse_pos(self):

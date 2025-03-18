@@ -47,7 +47,7 @@ class Explosion(pg.sprite.Sprite):
                 self.player.life -= self.damage
                 self.has_hit_player  = True
                 vector_move = vec2()
-                self.player.velocity.y += -30
+                self.player.velocity.y += -35
                 self.player.gravity = 1.1
                 
                     
