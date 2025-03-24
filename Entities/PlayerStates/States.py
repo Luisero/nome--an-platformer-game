@@ -60,6 +60,10 @@ class JumpState(State):
         self.animation = Animation('Assets/Sprites/jump.tmx', (self.context.rect.left-TILE_SIZE[0]*2,self.context.rect.top),False,vec2(TILE_SIZE[0]*4, TILE_SIZE[1]),0.2)
         self.context.camera.add(self.animation)
 
+        self.jump_sound = pg.mixer.Sound('Assets/Sounds/zapsplat_cartoon_comic_ruler_twang_wood_short_006_108519.mp3')
+        self.jump_sound.play()
+        self.jump_sound.set_volume(0.5)
+
     def input(self,input):
         pass
                 
@@ -68,10 +72,12 @@ class JumpState(State):
         self.animation.rect.topleft = (self.context.rect.left-TILE_SIZE[0]*2,self.context.rect.top)
         if self.context.velocity.y > 0:
             self.animation.kill()
+            self.jump_sound.stop()
             return FallingState(self.context)
         
         if self.context.collision_types['top']:
             self.animation.kill()
+            self.jump_sound.stop()
             return FallingState(self.context)
     
     

@@ -40,7 +40,7 @@ class Player(pg.sprite.Sprite):
 
         self.can_shoot = True   
         self.current_time = pg.time.get_ticks()
-        self.shoot_interval = 700
+        self.shoot_interval =600
 
         self.attack_duration = 400
 
@@ -51,6 +51,8 @@ class Player(pg.sprite.Sprite):
 
         self.ammo = 64
         
+
+        self.shoot_sound = pg.mixer.Sound('Assets/Sounds/shot_sound1.wav')
 
     
     def get_mouse_pos(self):
@@ -123,6 +125,7 @@ class Player(pg.sprite.Sprite):
                 bullet = Bullet(vec2(self.arm.rect.midright), self.mouse_pos+ self.scroll)
 
                 self.bullets.add(bullet)
+                self.shoot_sound.play()
                 self.can_shoot = False
                 self.ammo -=1
     def handle_collison(self):
