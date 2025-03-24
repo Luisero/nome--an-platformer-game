@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="7" height="1" tilewidth="18" tileheight="18" infinite="0" nextlayerid="2" nextobjectid="1">
+ <tileset firstgid="1" source="coin.tsx"/>
+ <layer id="1" name="Tile Layer 1" width="7" height="1">
+  <data encoding="csv">
+15,16,17,18,19,20,21
+</data>
+ </layer>
+</map>

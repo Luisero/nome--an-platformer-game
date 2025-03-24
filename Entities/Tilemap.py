@@ -5,6 +5,7 @@ from Entities.Tile import Tile
 from Entities.Player import Player
 from Entities.Enemy import Enemy
 from Entities.Capacitor import Capacitor
+from Entities.Coin import Coin
 from settings import *
 
 
@@ -59,6 +60,20 @@ class Tilemap(pg.sprite.Group):
                 enemy_group.add(enemy)
                 camera_group.add(enemy)
 
+    def get_coins(self, camera, player):
+        coins = list()
+        for object in self.tmx_data.get_layer_by_name('Pickables'):
+            if object.name == 'Coin':
+                coin_x = (object.x + self.initial_pos.x) / \
+                    self.tmx_data.tilewidth
+                coin_y = (object.y + self.initial_pos.y) / \
+                    self.tmx_data.tileheight
+
+                coin = Coin(
+                    vec2(coin_x*TILE_SIZE[0], coin_y*TILE_SIZE[1]), player, camera)
+                coins.append(coin)
+        return coins
+
     def add_traps(self, camera, traps_group, player):
         for object in self.tmx_data.get_layer_by_name('Traps'):
 
@@ -95,15 +110,13 @@ class Tilemap(pg.sprite.Group):
     def get_collision_with(self, sprite):
         colliisions = []
         for tile in self.collideable_tiles.sprites():
-            try:
-                if tile.collide == True:
-                    if tile.rect.colliderect(sprite.rect):
-                        colliisions.append(tile)
-            except:
-                pass
+
+            if tile.rect.colliderect(sprite.rect):
+                colliisions.append(tile)
         # return pg.sprite.spritecollide(sprite, self, False)
 
         return colliisions
+    # unused
 
     def make_map(self):
         """Cria uma superfície com o mapa renderizado."""
