@@ -46,11 +46,13 @@ class Level:
     def update(self, dt):
         self.dt = dt
         self.tilemap.update()
-        self.enemies.update(self.dt)
+        if self.enemies:
+            self.enemies.update(self.dt)
         self.entities_group.update(self.dt)
         self.explosions_group.update()
         self.camera.add(self.player.bullets)
-        self.traps_group.update(self.explosions_group)
+        if self.traps_group:
+            self.traps_group.update(self.explosions_group)
         self.dead_bullets.update(self.dt)
         self.check_player_hit_enemy()
         self.check_enemy_hit_player()

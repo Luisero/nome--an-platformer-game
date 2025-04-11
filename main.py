@@ -3,6 +3,7 @@ import pygame as pg
 import time
 import moderngl
 import array
+import math
 from Entities.Level import Level
 
 
@@ -183,7 +184,7 @@ class Game:
                 float(SCREEN_SIZE[0]), float(SCREEN_SIZE[1]))
             self.shader_prog['player_pos'] = (
                 float(camera_player_pos[0]), float(camera_player_pos[1]))
-            self.shader_prog['radius'] = 0.9
+            self.shader_prog['radius'] = self.time/100
 
             frame_tex = self.surf_to_texture()
             frame_tex.use(0)
