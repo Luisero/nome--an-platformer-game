@@ -2,7 +2,7 @@ import pygame as pg
 from sys import exit as exit_process
 vec2 = pg.math.Vector2
 FPS = 60
-TARGET_FPS = 90
+TARGET_FPS = 60
 pg.init()
 pg.mixer.init()
 screen = pg.display.set_mode((0, 0), pg.FULLSCREEN)

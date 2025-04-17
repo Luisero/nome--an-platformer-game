@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="256" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="41">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="256" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="42">
  <editorsettings>
   <export target="0." format="json"/>
  </editorsettings>
@@ -147,6 +147,7 @@
   <object id="38" type="Battery" x="624" y="542" width="15.3333" height="16"/>
   <object id="39" name="Coin" x="298.667" y="780.667"/>
   <object id="40" name="Coin" x="651.333" y="270.667"/>
+  <object id="41" name="Coin" x="137.333" y="430"/>
  </objectgroup>
  <objectgroup id="9" name="Traps">
   <object id="32" name="capacitor" type="capacitor" x="544.185" y="352.208" width="15.4186" height="14.8139"/>

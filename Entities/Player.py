@@ -22,7 +22,7 @@ class Player(pg.sprite.Sprite):
         self.input = vec2(0, 0)
         self.gravity = 1.2
         self.acceleration = vec2(0, self.gravity)
-        self.JUMP_FORCE = -23
+        self.JUMP_FORCE = -TILE_SIZE[1]/2.5
         self.velocity = vec2(0, 0)
         self.keys = pg.key.get_pressed()
 
