@@ -166,8 +166,6 @@ class Player(pg.sprite.Sprite):
         self.update_keys()
         self.mouse_pos = self.get_mouse_pos()
 
-        print(self.coins)
-
         current_time = pg.time.get_ticks()
         if current_time - self.current_time >= self.shoot_interval:
             self.current_time = pg.time.get_ticks()

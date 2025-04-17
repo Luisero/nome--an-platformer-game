@@ -123,7 +123,7 @@ class Game:
                 self.exit()
 
         # FPS = 60
-        self.fps = 60
+        self.fps = TARGET_FPS
         self.keys = pg.key.get_pressed()
         if self.keys[pg.K_ESCAPE]:
             self.exit()
@@ -191,7 +191,7 @@ class Game:
             self.shader_prog['tex'] = 0
 
             self.render_obj.render(mode=moderngl.TRIANGLE_STRIP)
-            self.clock.tick(self.target_fps)
+            self.clock.tick(self.fps)
             pg.display.flip()
 
             frame_tex.release()
