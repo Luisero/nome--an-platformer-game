@@ -9,14 +9,18 @@ from Entities.Coin import Coin
 from settings import *
 
 
-class Tilemap(pg.sprite.Group):
+class Tilemap(pg.sprite.Sprite):
     def __init__(self, filename, initial_pos=vec2(0, 0)) -> None:
         super().__init__()  # Inicializa o grupo de sprites
         self.tmx_data = pytmx.load_pygame(filename, pixelalpha=True)
-        self.width = self.tmx_data.width * self.tmx_data.tilewidth
-        self.height = self.tmx_data.height * self.tmx_data.tileheight
-        self.collideable_tiles = pg.sprite.Group()
+        self.width = self.tmx_data.width * TILE_SIZE[0]
+        self.height = self.tmx_data.height * TILE_SIZE[1]
+        self.collideable_rects = []
         self.initial_pos = initial_pos
+        
+        self.image= pg.Surface((self.width, self.height), pg.SRCALPHA)
+        self.rect  = self.image.get_frect(topleft=self.initial_pos)
+        
         self.load_tiles()
 
     def load_tiles(self):
@@ -25,24 +29,30 @@ class Tilemap(pg.sprite.Group):
             if isinstance(layer, pytmx.TiledTileLayer):
                 for x, y, gid in layer:
                     image = self.tmx_data.get_tile_image_by_gid(gid)
-                    attributes = self.tmx_data.get_tile_properties_by_gid(gid) or {
-                    }
+                    if not image:
+                        continue
 
-                    position = vec2(
-                        x * TILE_SIZE[0]+self.initial_pos.x, y * TILE_SIZE[1] + self.initial_pos.y)
-                    collide = attributes.get(
-                        'collide', False)  # Evita KeyError
+                    attributes = self.tmx_data.get_tile_properties_by_gid(gid) or {}
+                    collide = attributes.get('collide', False)
 
+                    # 1. Posição LOCAL (para desenhar na superfície self.image)
+                    # O canto de self.image é sempre (0, 0)
+                    local_pos = vec2(x * TILE_SIZE[0], y * TILE_SIZE[1])
+
+                    # 2. Posição no MUNDO (para colisões e objetos)
+                    world_pos = local_pos + self.initial_pos
+
+                    image = pg.transform.scale(image, TILE_SIZE)
+                    
+                    # Use a posição LOCAL para blit na imagem do mapa
+                    self.image.blit(image, local_pos)
+                
+                    
                     if collide:
-                        collide = True
-
-                    if image:
-
-                        image = pg.transform.scale(image, TILE_SIZE)
-                        tile = Tile(position=position, surface=image,
-                                    group=self, collide=collide)
-                        if collide:
-                            self.collideable_tiles.add(tile)
+                        # Use a posição no MUNDO para o retângulo de colisão
+                        self.collideable_rects.append(pg.rect.FRect(world_pos.x, world_pos.y, TILE_SIZE[0], TILE_SIZE[1]))
+        
+        self.image.convert()
 
     def add_enemies(self, camera_group, enemy_group):
         for object in self.tmx_data.get_layer_by_name('Enemies'):
@@ -104,24 +114,21 @@ class Tilemap(pg.sprite.Group):
         camera_group.add(player)
         return player
 
-    def draw(self, surface):
-        """Desenha os tiles na superfície fornecida."""
-        for sprite in self.sprites():
-            surface.blit(sprite.image, sprite.rect)
-
+    def draw(self, surface: pg.surface.Surface, scroll):
+        """Desenha o tilemap na tela usando o scroll da câmera."""
+       # self.image.fill('white')
+        
+        
+        pos = self.initial_pos -scroll
+        surface.blit(self.image, pos)
+        
     def get_collision_with(self, sprite):
-        colliisions = []
-        for tile in self.collideable_tiles.sprites():
+        collisions = []
+        for rect in self.collideable_rects:
 
-            if tile.rect.colliderect(sprite.rect):
-                colliisions.append(tile)
+            if rect.colliderect(sprite.rect):
+                collisions.append(rect)
         # return pg.sprite.spritecollide(sprite, self, False)
 
-        return colliisions
+        return collisions
     # unused
-
-    def make_map(self):
-        """Cria uma superfície com o mapa renderizado."""
-        temp_surface = pg.Surface((self.width, self.height), pg.SRCALPHA)
-        self.render(temp_surface)
-        return temp_surface

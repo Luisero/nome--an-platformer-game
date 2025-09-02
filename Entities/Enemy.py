@@ -76,23 +76,23 @@ class Enemy(pg.sprite.Sprite):
         return self.ground
 
     def manage_collision_x(self):
-        for tile in self.collision_list:
+        for rect in self.collision_list:
             if self.velocity.x > 0:
-                self.rect.right = tile.rect.left
+                self.rect.right = rect.left
                 self.collision_types["right"] = True
             elif self.velocity.x < 0:
-                self.rect.left = tile.rect.right
+                self.rect.left = rect.right
                 self.collision_types["left"] = True
 
     def manage_collision_y(self):
-        for tile in self.collision_list:
+        for rect in self.collision_list:
             if self.velocity.y > 0:
-                self.rect.bottom = tile.rect.top
+                self.rect.bottom = rect.top
                 self.collision_types["bottom"] = True
                 self.velocity.y = 0
                 self.ground = True
             elif self.velocity.y < 0:
-                self.rect.top = tile.rect.bottom
+                self.rect.top = rect.bottom
                 self.collision_types["top"] = True
                 self.velocity.y = 0
 

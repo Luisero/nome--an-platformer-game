@@ -1,2 +1,4 @@
+glcontext==3.0.0
+moderngl==5.12.0
 pygame-ce==2.5.3
 PyTMX==3.32

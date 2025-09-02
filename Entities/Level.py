@@ -11,9 +11,9 @@ class Level:
         self.number = number
         self.camera = Camera()
         self.tilemap = Tilemap(f'./Data/Levels/{self.number}.tmx')
-        self.camera.add(self.tilemap.sprites())
+        self.camera.add(self.tilemap)
         self.entities_group = pg.sprite.Group()
-        self.tilemap.load_tiles()
+        #self.tilemap.load_tiles()
 
         self.traps_group = pg.sprite.Group()
         self.dead_bullets = pg.sprite.Group()
@@ -43,7 +43,11 @@ class Level:
 
         self.add_next_level_trigger()
 
+     
+
     def update(self, dt):
+        
+
         self.dt = dt
         self.tilemap.update()
         if self.enemies:

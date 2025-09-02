@@ -10,7 +10,7 @@ class Coin(Pickable):
         self.player = player
         self.camera = camera
         self.pos = pos
-        print(self.pos)
+        
         self.animation = Animation('./Assets/Sprites/coin.tmx', self.pos, True)
         self.camera.add(self.animation)
 
@@ -18,7 +18,7 @@ class Coin(Pickable):
 
         self.animation.play()
         self.animation.rect.topleft = self.pos
-        print(self.animation.rect.topleft)
+        
 
     def on_collected(self):
         self.player.coins += 1
